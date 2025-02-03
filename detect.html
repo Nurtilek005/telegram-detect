@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Определение устройства</title>
+    <script>
+        function detectDevice() {
+            let userAgent = navigator.userAgent.toLowerCase();
+            let device = "Unknown";
+
+            if (userAgent.includes("iphone") || userAgent.includes("ios")) {
+                device = "iPhone";
+            } else if (userAgent.includes("android")) {
+                device = "Android";
+            }
+
+            sendResultToBot(device);
+        }
+
+        function sendResultToBot(device) {
+            const botToken = "Your_Bot_Token"; // Вставь токен бота
+            const chatId = "Your_Chat_ID"; // Вставь ID пользователя (можно передавать через URL)
+            const message = `Ваше устройство: ${device}`;
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`)
+                .then(response => response.json())
+                .then(data => console.log("Отправлено в Telegram:", data))
+                .catch(error => console.error("Ошибка отправки:", error));
+        }
+    </script>
+</head>
+<body onload="detectDevice()">
+<h2>Определение устройства...</h2>
+</body>
+</html>
